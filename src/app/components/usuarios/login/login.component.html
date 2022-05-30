@@ -1,0 +1,25 @@
+<div class="row vh-100 justify-content-center aling-items-center">
+    <div class="col-md-auto">
+        <div class="login">
+            <form class="custom-form" #login="ngForm" (ngSubmit)="login.form.valid">
+                <h1>Login</h1>
+                <div>
+                    <input type="text" name="codUser" placeholder="Código de Usuario" [(ngModel)]="codigoUsuario"
+                        #codUser="ngModel" id="codUser" required
+                        [ngClass]="{'is-invalid':login.submitted && codUser.invalid}" />
+                    <div class="text-danger error mb-2" *ngIf="login.submitted && codUser.invalid">
+                        <span *ngIf="codUser.errors?.['required']">Código requerido</span>
+                    </div>
+                </div>
+                <div>
+                    <input type="password" name="password" id="password" placeholder="Password" required
+                        [(ngModel)]="pass" #password="ngModel" [ngClass]="{'is-invalid':login.submitted && password.invalid}"/>
+                    <div class="text-danger error mb-2" *ngIf="login.submitted && codUser.invalid">
+                        <span *ngIf="password.errors?.['required']">Contraseña requerido</span>
+                    </div>
+                </div>
+                <button type="submit" (click)="startSession()">Log in</button>
+            </form>
+        </div>
+    </div>
+</div>

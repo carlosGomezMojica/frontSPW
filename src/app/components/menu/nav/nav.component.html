@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg py-3 navbar-dark bg-dark shadow-sm">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <!-- Logo Image -->
+            <img src="https://bootstrapious.com/i/snippets/sn-nav-logo/logo.png" width="45" alt=""
+                class="d-inline-block align-middle mr-2">
+            <!-- Logo Text -->
+            <span class="text-uppercase font-weight-bold">Company</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+            aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbarContent" class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav ml-auto" *ngIf="userType == 'EM'">
+                <li class="nav-item active"><a [routerLink]="['/index/cajero']" class="nav-link">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item"><a [routerLink]="['/ventas']" class="nav-link">Ventas</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+                </ul>
+            <ul class="navbar-nav ml-auto" *ngIf="userType == 'GE'">
+                <li class="nav-item active"><a [routerLink]="['/index/gerente']" class="nav-link">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item"><a [routerLink]="['/usuarios']" class="nav-link">Usuario</a></li>
+                <li class="nav-item"><a [routerLink]="['/productos']" class="nav-link">Productos</a></li>
+                <li class="nav-item"><a [routerLink]="['/stock']" class="nav-link">Stock</a></li>
+                <li class="nav-item"><a [routerLink]="['/almacen']" class="nav-link">Almacen</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Services</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,118 @@
+<app-nav></app-nav>
+
+<div class="row justify-content-start mt-2">
+    <div class="col-4 text-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear">
+            Agregar Stock
+        </button>
+        <div class="modal fade" id="crear" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Agregar Stock</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3" #formCrearStock="ngForm" (ngSubmit)="formCrearStock.form.valid">
+                            <div>
+                                <select id="producto" class="form-select" name="producto" [(ngModel)]="producto"
+                                    #productoId="ngModel" required
+                                    [ngClass]="{'is-invalid':formCrearStock.submitted && productoId.invalid}">
+                                    <option *ngFor="let producto of productos" value="{{producto._id}}">{{producto.nombre}}</option>
+                                </select>
+                                <div class="text-danger error mb-2" *ngIf="formCrearStock.submitted && productoId.invalid">
+                                    <span *ngIf="productoId.errors?.['required']">Tipo usuario requerido</span>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="number" class="form-control" id="existencias" name="existencias"
+                                    [(ngModel)]="cantidad" #existencias="ngModel" placeholder="Cantidad" required
+                                    [ngClass]="{'is-invalid':formCrearStock.submitted && existencias.invalid}">
+                                <div class="text-danger error mb-2"
+                                    *ngIf="formCrearStock.submitted && existencias.invalid">
+                                    <span *ngIf="existencias.errors?.['required']">Cantidad requerida</span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" 
+                                data-bs-dismiss="modal" (click)="crear()">Crear</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center mt-3">
+    <div class="col-10">
+        <table class="table table-striped border border-dark border-1">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of stock">
+                    <td>{{item._id_producto.nombre}}</td>
+                    <td>{{item.fecha}}</td>
+                    <td>{{item.cantidad}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#actualizar" (click)="cargarData(item)">
+                            Actualizar
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="actualizar" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Actualizar stock</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row g-3" #formActualizarStock="ngForm"
+                                            (ngSubmit)="formActualizarStock.form.valid">
+
+                                            <div>
+                                                <select id="producto" class="form-select" name="producto" [(ngModel)]="producto"
+                                                    #productoId="ngModel" required
+                                                    [ngClass]="{'is-invalid':formActualizarStock.submitted && productoId.invalid}">
+                                                    <option *ngFor="let producto of productos" value="{{producto._id}}">{{producto.nombre}}</option>
+                                                </select>
+                                                <div class="text-danger error mb-2" *ngIf="formActualizarStock.submitted && productoId.invalid">
+                                                    <span *ngIf="productoId.errors?.['required']">Tipo usuario requerido</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input type="number" class="form-control" id="existencias" name="existencias"
+                                                    [(ngModel)]="cantidad" #existencias="ngModel" placeholder="Cantidad" required
+                                                    [ngClass]="{'is-invalid':formActualizarStock.submitted && existencias.invalid}">
+                                                <div class="text-danger error mb-2"
+                                                    *ngIf="formActualizarStock.submitted && existencias.invalid">
+                                                    <span *ngIf="existencias.errors?.['required']">Cantidad requerida</span>
+                                                </div>
+                                            </div>
+                                        
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="actualizar()" data-bs-dismiss="modal">Actualizar</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" (click)="eliminar(item._id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

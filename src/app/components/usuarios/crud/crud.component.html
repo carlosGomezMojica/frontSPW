@@ -1,0 +1,170 @@
+<app-nav></app-nav>
+<div class="row justify-content-start mt-2">
+    <div class="col-4 text-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear">
+            Crear usuario
+        </button>
+        <div class="modal fade" id="crear" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Crear usuario</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3" #formCrearUsr="ngForm" (ngSubmit)="formCrearUsr.form.valid">
+
+                            <div>
+                                <input type="text" class="form-control" id="nombreUsr" name="nombreUsr"
+                                    [(ngModel)]="nombre" #nombreUsr="ngModel" placeholder="Nombre" required
+                                    [ngClass]="{'is-invalid':formCrearUsr.submitted && nombreUsr.invalid}">
+                                <div class="text-danger error mb-2" *ngIf="formCrearUsr.submitted && nombreUsr.invalid">
+                                    <span *ngIf="nombreUsr.errors?.['required']">Nombre requerido</span>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control" id="apellidoUsuario" name="apellidoUsuario"
+                                    placeholder="Apellido" [(ngModel)]="apellido" #apellidoUsr="ngModel" required
+                                    [ngClass]="{'is-invalid':formCrearUsr.submitted && apellidoUsr.invalid}">
+                                <div class="text-danger error mb-2"
+                                    *ngIf="formCrearUsr.submitted && apellidoUsr.invalid">
+                                    <span *ngIf="apellidoUsr.errors?.['required']">Apellido requerido</span>
+                                </div>
+                            </div>
+                            <div>
+                                <select id="tipoUsuario" class="form-select" name="tipoUsuario" [(ngModel)]="type"
+                                    #typeUsr="ngModel" required
+                                    [ngClass]="{'is-invalid':formCrearUsr.submitted && typeUsr.invalid}">
+                                    <option value="EM">Empleado</option>
+                                    <option value="GE">Gerente</option>
+                                </select>
+                                <div class="text-danger error mb-2" *ngIf="formCrearUsr.submitted && typeUsr.invalid">
+                                    <span *ngIf="typeUsr.errors?.['required']">Tipo usuario requerido</span>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="number" class="form-control" id="codigoUsuario" name="codigoUsuario"
+                                    placeholder="Código" [(ngModel)]="codigo" #codigoUsr="ngModel" required
+                                    [ngClass]="{'is-invalid':formCrearUsr.submitted && codigoUsr.invalid}">
+                                <div class="text-danger error mb-2" *ngIf="formCrearUsr.submitted && codigoUsr.invalid">
+                                    <span *ngIf="codigoUsr.errors?.['required']">Código requerido</span>
+                                </div>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control" id="contrasenaUsuario" name="contrasenaUsuario"
+                                    placeholder="contraseña" [(ngModel)]="contrasena" #contrasenaUsr="ngModel" required
+                                    [ngClass]="{'is-invalid':formCrearUsr.submitted && contrasenaUsr.invalid}">
+                                <div class="text-danger error mb-2"
+                                    *ngIf="formCrearUsr.submitted && contrasenaUsr.invalid">
+                                    <span *ngIf="contrasenaUsr.errors?.['required']">Contraseña requerido</span>
+                                </div>
+                            </div>
+
+
+
+                            <button type="submit" class="btn btn-primary" (click)="create()"
+                                data-bs-dismiss="modal">Crear</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center align-items-center mt-3">
+    <div class="col-10">
+        <table class="table table-striped border border-dark border-1">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Tipo de usuario</th>
+                    <th>Código usuario</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ejem">
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.apellido}}</td>
+                    <td>{{item.tipoUsuario}}</td>
+                    <td>{{item.codigoUsuario}}</td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#actualizar" (click)="cargarData(item)">
+                            Actualizar
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="actualizar" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Actualizar usuario</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row g-3" #formActualizarUsr="ngForm"
+                                            (ngSubmit)="formActualizarUsr.form.valid">
+
+                                            <div>
+                                                <input type="text" class="form-control" id="nombreUsr" name="nombreUsr"
+                                                    [(ngModel)]="nombre" #nombreUsr="ngModel" required
+                                                    [ngClass]="{'is-invalid':formActualizarUsr.submitted && nombreUsr.invalid}">
+                                                <div class="text-danger error mb-2"
+                                                    *ngIf="formActualizarUsr.submitted && nombreUsr.invalid">
+                                                    <span *ngIf="nombreUsr.errors?.['required']">nombre requerido</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input type="text" class="form-control" id="apellidoUsr"
+                                                    name="apellidoUsr" placeholder="Apellido" [(ngModel)]="apellido"
+                                                    #apellidoUsr="ngModel" required
+                                                    [ngClass]="{'is-invalid':formActualizarUsr.submitted && apellidoUsr.invalid}">
+                                                <div class="text-danger error mb-2"
+                                                    *ngIf="formActualizarUsr.submitted && apellidoUsr.invalid">
+                                                    <span *ngIf="apellidoUsr.errors?.['required']">apellido
+                                                        requerido</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <select id="tipoUsuario" class="form-select" name="tipoUsuario" [(ngModel)]="type"
+                                                    #typeUsr="ngModel" required
+                                                    [ngClass]="{'is-invalid':formActualizarUsr.submitted && typeUsr.invalid}">
+                                                    <option value="EM">Empleado</option>
+                                                    <option value="GE">Gerente</option>
+                                                </select>
+                                                <div class="text-danger error mb-2" *ngIf="formActualizarUsr.submitted && typeUsr.invalid">
+                                                    <span *ngIf="typeUsr.errors?.['required']">Tipo usuario requerido</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input type="number" class="form-control" id="codigoUsr"
+                                                    name="codigoUsr" placeholder="Código" [(ngModel)]="codigo"
+                                                    #codigoUsr="ngModel" required [ngClass]="{'is-invalid':formActualizarUsr.submitted && codigoUsr.invalid}">
+                                                    <div class="text-danger error mb-2"
+                                                        *ngIf="formActualizarUsr.submitted && codigoUsr.invalid">
+                                                        <span *ngIf="codigoUsr.errors?.['required']">Código
+                                                            requerido</span>
+                                                    </div>
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary"
+                                                (click)="actualizar()" data-bs-dismiss="modal">Actualizar</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" (click)="eliminar(item._id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

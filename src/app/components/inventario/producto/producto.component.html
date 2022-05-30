@@ -1,0 +1,116 @@
+<app-nav></app-nav>
+
+<div class="row justify-content-start mt-2">
+    <div class="col-4 text-center">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crear">
+            Crear producto
+        </button>
+        <div class="modal fade" id="crear" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Crear producto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="row g-3" #formCrearProducto="ngForm" (ngSubmit)="formCrearProducto.form.valid">
+
+                            <div>
+                                <input type="text" class="form-control" id="nombreProducto" name="nombreProducto"
+                                    [(ngModel)]="nombre" #nombreProducto="ngModel" placeholder="Nombre" required
+                                    [ngClass]="{'is-invalid':formCrearProducto.submitted && nombreProducto.invalid}">
+                                <div class="text-danger error mb-2"
+                                    *ngIf="formCrearProducto.submitted && nombreProducto.invalid">
+                                    <span *ngIf="nombreProducto.errors?.['required']">Nombre requerido</span>
+                                </div>
+                            </div>
+                            <div>
+                                <textarea type="text" class="form-control" id="descripcionProducto"
+                                    name="descripcionProducto" placeholder="Descripcion producto"
+                                    [(ngModel)]="descripcion" #descripcionProducto="ngModel" required
+                                    [ngClass]="{'is-invalid':formCrearProducto.submitted && descripcionProducto.invalid}"></textarea>
+                                <div class="text-danger error mb-2"
+                                    *ngIf="formCrearProducto.submitted && descripcionProducto.invalid">
+                                    <span *ngIf="descripcionProducto.errors?.['required']">Descripcion requerida</span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary" (click)="create()"
+                                data-bs-dismiss="modal">Crear</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center align-items-center mt-3">
+    <div class="col-8">
+        <table class="table table-striped border border-dark border-1">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripcion</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of productos">
+                    <td>{{item.nombre}}</td>
+                    <td>{{item.descripcion}}</td>
+            
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#actualizar" (click)="cargarDatos(item)">
+                            Actualizar
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="actualizar" data-bs-backdrop="static" data-bs-keyboard="false"
+                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Actualizar producto</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row g-3" #formActualizarProducto="ngForm" (ngSubmit)="formActualizarProducto.form.valid">
+
+                                            <div>
+                                                <input type="text" class="form-control" id="nombreProducto" name="nombreProducto"
+                                                    [(ngModel)]="nombre" #nombreProducto="ngModel" placeholder="Nombre" required
+                                                    [ngClass]="{'is-invalid':formActualizarProducto.submitted && nombreProducto.invalid}">
+                                                <div class="text-danger error mb-2"
+                                                    *ngIf="formActualizarProducto.submitted && nombreProducto.invalid">
+                                                    <span *ngIf="nombreProducto.errors?.['required']">Nombre requerido</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <textarea type="text" class="form-control" id="descripcionProducto"
+                                                    name="descripcionProducto" placeholder="Descripcion producto"
+                                                    [(ngModel)]="descripcion" #descripcionProducto="ngModel" required
+                                                    [ngClass]="{'is-invalid':formActualizarProducto.submitted && descripcionProducto.invalid}"></textarea>
+                                                <div class="text-danger error mb-2"
+                                                    *ngIf="formActualizarProducto.submitted && descripcionProducto.invalid">
+                                                    <span *ngIf="descripcionProducto.errors?.['required']">Descripcion requerida</span>
+                                                </div>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary" (click)="actualizar()"
+                                                data-bs-dismiss="modal">actualizar</button>
+                
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger" (click)="eliminar(item._id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
